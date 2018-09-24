@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/github-user/say_hello"
 )
 
 func main() {
-	say_hello.Say_hello("wzy")
+	str := say_hello.Say_hello("wzy")
+	fmt.Printf(str + "\n")
 }
