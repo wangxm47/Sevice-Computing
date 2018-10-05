@@ -67,7 +67,11 @@ func ExecArgs(args *selpgArgs) {
 			pdata, perr := preader.ReadString('\f')
 			if perr != nil || perr == io.EOF {
 				if perr == io.EOF {
-					fmt.Fprintf(fout, "%s", pdata)
+					if args.destination != "" {
+						inpipe.Write([]byte(pdata))
+					} else {
+						fmt.Fprintf(fout, "%s", pdata)
+					}
 					if page <= args.end {
 						fmt.Println("selpg: it's end of file, \"-e\" is greater than the total pages")
 					}
@@ -76,7 +80,11 @@ func ExecArgs(args *selpgArgs) {
 			}
 			pdata = strings.Replace(pdata, "\f", "\n", -1)
 			if page >= args.start {
-				fmt.Fprintf(fout, "%s", pdata)
+				if args.destination != "" {
+					inpipe.Write([]byte(pdata))
+				} else {
+					fmt.Fprintf(fout, "%s", pdata)
+				}
 			}
 			page++
 		}
@@ -87,7 +95,11 @@ func ExecArgs(args *selpgArgs) {
 			ldata, lerr := lreader.ReadString('\n')
 			if lerr != nil || lerr == io.EOF {
 				if lerr == io.EOF {
-					fmt.Fprintf(fout, "%s", ldata)
+					if args.destination != "" {
+						inpipe.Write([]byte(ldata))
+					} else {
+						fmt.Fprintf(fout, "%s", ldata)
+					}
 					if page <= args.end {
 						fmt.Println("selpg: it's end of file, \"-e\" is greater than the total pages")
 					} else if line < args.lineNum-1 {
@@ -97,7 +109,11 @@ func ExecArgs(args *selpgArgs) {
 				}
 			}
 			if page >= args.start {
-				fmt.Fprintf(fout, "%s", ldata)
+				if args.destination != "" {
+					inpipe.Write([]byte(ldata))
+				} else {
+					fmt.Fprintf(fout, "%s", ldata)
+				}
 			}
 			if line%args.lineNum == 0 {
 				line = 0
