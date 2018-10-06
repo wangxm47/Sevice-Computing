@@ -78,11 +78,11 @@ func ExecArgs(args *selpgArgs) {
 					break
 				}
 			}
-			pdata = strings.Replace(pdata, "\f", "\n", -1)
 			if page >= args.start {
 				if args.destination != "" {
 					inpipe.Write([]byte(pdata))
 				} else {
+					pdata = strings.Replace(pdata, "\f", "\n", -1)
 					fmt.Fprintf(fout, "%s", pdata)
 				}
 			}
