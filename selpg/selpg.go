@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"strings"
 
 	"github.com/spf13/pflag"
 )
@@ -82,7 +81,7 @@ func ExecArgs(args *selpgArgs) {
 				if args.destination != "" {
 					inpipe.Write([]byte(pdata))
 				} else {
-					pdata = strings.Replace(pdata, "\f", "\n", -1)
+					//pdata = strings.Replace(pdata, "\f", "\n", -1)
 					fmt.Fprintf(fout, "%s", pdata)
 				}
 			}
